@@ -1,5 +1,7 @@
 import Header from "@/components/layout/Header";4
 import Card from "@/components/common/Card";
+
+
 export default function HomePage() {    
 
     return(
