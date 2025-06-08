@@ -1,5 +1,4 @@
-// pages/users.tsx
-import { GetStaticProps } from 'next';
+
 import UserCard from '@/components/common/UserCard';
 import { UserProps } from '@/interfaces';
 
@@ -7,7 +6,7 @@ interface UsersPageProps {
   users: UserProps[];
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export async function getStaticProps() {
   const res = await fetch('https://jsonplaceholder.typicode.com/users');
   const data = await res.json();
 
@@ -30,11 +29,11 @@ export const getStaticProps: GetStaticProps = async () => {
       zipcode: user.address.zipcode,
     },
   }));
+
   return {
     props: { users },
   };
-};
-
+}
 const UsersPage = ({ users }: UsersPageProps) => {
   return (
     <div className="p-4">
