@@ -6,6 +6,7 @@ const Header = () => {
             <Link href="/" className="hover:underline">Home</Link>
             <Link href="/home" className="hover:underline">/Home</Link>
             <Link href="/about" className="hover:underline">About</Link>
+            <Link href="/posts" className="hover:text-gray-300">Posts</Link>
          </nav>
         Welcome to ALX Project 2
     </header>
