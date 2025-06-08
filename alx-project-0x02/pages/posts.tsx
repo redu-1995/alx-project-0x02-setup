@@ -1,38 +1,38 @@
-import { useEffect, useState } from "react";
-import PostCard from "@/components/common/PostCard";
-import { PostProps } from "@/interfaces";
-import Header from "@/components/layout/Header";
+// pages/posts.tsx
+import { GetStaticProps } from 'next';
+import PostCard from '@/components/common/PostCard';
+import { PostProps } from '@/interfaces';
 
-const PostsPage = () => {
-  const [posts, setPosts] = useState<PostProps[]>([]);
+interface PostsPageProps {
+  posts: PostProps[];
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-      const data = await res.json();
+export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
+  const data = await res.json();
 
-      const formattedData = data.slice(0, 10).map((post: { title: string; body: string; userId: number }) => ({
+  const posts: PostProps[] = data.map((post: { title: string; body: string; userId: number }) => ({
   title: post.title,
   content: post.body,
   userId: post.userId,
-}));
+}))
 
-      setPosts(formattedData);
-    };
 
-    fetchPosts();
-  }, []);
+  return {
+    props: { posts },
+  };
+};
 
+const PostsPage = ({ posts }: PostsPageProps) => {
   return (
-    <>
-      <Header />
-      <main className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Posts</h1>
+    <div className="p-4">
+      <h1 className="text-2xl font-bold mb-4">Posts</h1>
+      <div className="space-y-4">
         {posts.map((post, index) => (
           <PostCard key={index} {...post} />
         ))}
-      </main>
-    </>
+      </div>
+    </div>
   );
 };
 
